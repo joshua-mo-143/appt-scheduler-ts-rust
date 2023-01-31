@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
-import Create from './pages/appointments/create'
+import Create from './pages/appointments/Create'
 
 function App() {
   const [count, setCount] = useState(0)

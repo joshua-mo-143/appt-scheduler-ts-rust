@@ -9,7 +9,9 @@ const Layout = ({children}: Props) => {
   return (
     <div>
         <Navigation/>
+        <div className='flex flex-row justify-center min-h-screen'>
         {children}
+        </div>
     </div>
   )
 }
