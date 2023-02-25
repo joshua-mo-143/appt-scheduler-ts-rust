@@ -1,15 +1,14 @@
-use axum::{routing::get, Router};
 use sqlx::PgPool;
 use std::net::SocketAddr;
 use shuttle_secrets::SecretStore;
 
 mod router;
-use router::hello_world;
+use router::create_router;
 
 #[shuttle_service::main]
 async fn main(
     #[shuttle_shared_db::Postgres] postgres: PgPool,
-    #[shuttle_secrets::Secrets] secrets: SecretStore
+    #[shuttle_secrets::Secrets] _secrets: SecretStore
 ) -> Result<CustomService, shuttle_service::error::Error> {
     Ok(CustomService { postgres })
 }
@@ -24,7 +23,7 @@ impl shuttle_service::Service for CustomService {
         mut self: Box<Self>,
         addr: SocketAddr,
     ) -> Result<(), shuttle_service::error::Error> {
-        self.init_router(addr).await;
+        self.init_router(addr).await.expect("There was an error trying to create the router!");
 
         Ok(())
     }
@@ -32,7 +31,7 @@ impl shuttle_service::Service for CustomService {
 
 impl CustomService {
     async fn init_router(&self, addr: std::net::SocketAddr) -> Result<(), hyper::Error> {
-        let meme = Router::new().route("/", get(hello_world));
+        let meme = create_router(self.postgres.clone());
 
         let bound_server = axum::Server::bind(&addr).serve(meme.into_make_service());
 

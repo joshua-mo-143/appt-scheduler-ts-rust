@@ -85,7 +85,7 @@ export const Create = (props: Props) => {
                     <div id="date-selection" className='w-full text-lg content-center align-center grid grid-cols-7 self-center grid-rows-auto gap-y-6 gap-x-4'>
                         {
                             [...Array(30).keys()].map((x, i) => (
-                                <span className={i + 1 > dayTest ? 'rounded-xl shadow-md p-2 text-center bg-stone-100 hover:bg-blue-200 transition-all cursor-pointer date-selection'
+                                <span className={i + 1 > day ? 'rounded-xl shadow-md p-2 text-center bg-stone-100 hover:bg-blue-200 transition-all cursor-pointer date-selection'
                                     : 'bg-stone-800 rounded-xl shadow-md p-2 text-center'}
                                     key={i + 1}
                                     onClick={(e) => updateVar(e, setDate, "day")}
